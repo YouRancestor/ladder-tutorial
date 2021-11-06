@@ -42,7 +42,7 @@
     polipo socksParentProxy=127.0.0.1:socks5_port proxyAddress=0.0.0.0 proxyPort=http_port
     ```
 
-    该命令将本地socks5_port端口的socks5代理转换为http代理，http代理的端口号为http_port。之后即可为浏览器配置http代理或将系统代理配置为127.0.0.1:http_port。
+    该命令将本地socks5_port端口的socks5代理转换为http代理，http代理的端口号为http_port。之后即可为浏览器配置http代理或将系统代理配置为127.0.0.1:http_port。proxyAddress=0.0.0.0中的0.0.0.0的意思是代理服务在本机所有可用的IP地址上监听，以接受来自本机以及局域网内其他设备的请求，可为局域网内的其他设备提供代理服务（注意配置防火墙放行端口）；如仅希望本机访问，也可替换为proxyAddress=127.0.0.1。
 
     注：
 
