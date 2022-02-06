@@ -80,3 +80,30 @@
 
 缺点：如需全局全协议代理，客户端需要的工具较多，配置较为繁琐。
 
+附：手动配置L2TP服务
+
+已将L2TP服务配置脚本提取至[vpnsetup.sh](/vpnsetup.sh)，可参考以下步骤在任意服务器上配置L2TP服务：
+
+1. 修改脚本[vpnsetup.sh 27-29行](/vpnsetup.sh#L22)，填写用于L2TP客户端登陆的用户名密码。（如果不修改，将默认使用随机密码进行配置，在脚本最后会打印出来，注意记录即可。）
+
+1. 将脚本[vpnsetup.sh](/vpnsetup.sh)拷贝到服务器上。
+
+    ```sh
+    scp -i /path/to/your_private_key.pem vpnsetup.sh your_user_name@your_server_ip:~/
+    ```
+
+1. ssh登陆服务器。
+
+    ```sh
+    ssh -i /path/to/your_private_key.pem your_user_name@your_server_ip
+    ```
+
+1. 在服务器上以管理员权限执行脚本vpnsetup.sh。
+
+    ```sh
+    sudo ./vpnsetup.sh
+    ```
+
+1. 云服务控制台配置网络入站规则，对UDP协议放行1701、500、4500三个端口。
+
+1. 客户端登陆时选择L2TP/IPSec PSK类型，须填写IPSec预共享密钥、用户名、密码三项（与第1步填写的对应）。
