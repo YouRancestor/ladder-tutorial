@@ -181,9 +181,9 @@ bigecho "Installing packages required for the VPN..."
 
 (
   set -x
-  apt-get -yqq install libnss3-dev libnspr4-dev pkg-config \
+  apt-get -yqq install libssl-dev libnss3-dev libnspr4-dev pkg-config \
     libpam0g-dev libcap-ng-dev libcap-ng-utils libselinux1-dev \
-    libcurl4-nss-dev flex bison gcc make libnss3-tools \
+    libcurl4-openssl-dev flex bison gcc make libnss3-tools \
     libevent-dev libsystemd-dev uuid-runtime ppp xl2tpd >/dev/null
 ) || exiterr2
 
