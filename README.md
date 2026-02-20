@@ -103,6 +103,7 @@
     ```sh
     sudo ./vpnsetup.sh
     ```
+    注：如果文件存在且有可执行权限，执行时却出现报错"No such file or directory"，在vim中打开，输入指令":set ff"查看文件格式，若显示"fileformat=dos"，则说明是文件格式错误，输入指令":set ff=unix"，并保存退出":wq"即可解决。
 
 1. 云服务控制台配置网络入站规则，对UDP协议放行1701、500、4500三个端口。
 
