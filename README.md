@@ -10,19 +10,25 @@
 
 - [proxifier](https://proxifier.soft32.com) / [proxycap](http://www.proxycap.com) / [proxychains](https://github.com/haad/proxychains)([-windows](https://github.com/shunf4/proxychains-windows.git))。（可选）
 
-## 方法一： PPTP / L2TP 服务器搭设
+## 免费云服务提供商
+
+### Amazon
 
 参考链接 [Rolling out your own private VPN server on AWS cloud in 10 minutes](https://github.com/webdigi/AWS-VPN-Server-Setup)
 
-以上教程使用脚本（CloudFormation堆栈）自动创建亚马逊ec2实例，并根据预设参数安装启动PPTP或L2TP服务器程序。脚本不含ssh服务，所以不能用于远程连接。也可手动创建ec2实例，并参考脚本自行搭设所需的服务程序，这样可以与后面的方法二并存。
+注：以上教程使用脚本（CloudFormation堆栈）自动创建亚马逊ec2实例，并根据预设参数安装启动PPTP或L2TP服务器程序；脚本不含ssh服务，所以不能用于远程连接；也可手动创建ec2实例，并参考脚本自行搭设所需的服务程序，具体步骤见下。
 
-优点：操作系统通常都支持PPTP和L2TP协议进行全局代理。
+警告：Amazon已于2026年前修改了免费套餐，由之前的免费一年修改为半年，并且增加了限制，由之前的可以重新注册账号改为了疑似一张银行卡只能参加一次。
 
-缺点：客户端通常由系统内置，访问服务器的目标端口通常是固定的不易修改，因此数据包容易被识别并拦截；代理为全局代理，不够灵活。
+### Oracle
 
-## 方法二： socks5 代理服务搭设
+参考链接 [玩转云服务：Oracle Cloud甲骨文永久免费云服务器注册及配置指南](https://zhuanlan.zhihu.com/p/707330156)
 
-假设你已经配置好一个远程主机，并可以通过ssh远程登陆。（如果你没有主机，可以参考方法一中的链接申请一个aws的账号，但是不要使用脚本，只需手动创建一个ec2实例即可。）
+注：以上教程执行到“远程登陆”步骤即可，之后的步骤用于部署web服务，按需参考；注册甲骨文账号时需要验证码，找个加速器（如Watt Toolkit、KO加速器等）；填银行卡信息时不要开加速器不要挂代理（保证使用的银行卡的银行所属国家跟IP一致，否则可能会被拒）。
+
+## socks5 代理服务搭设
+
+假设你已经配置好一个远程主机，并可以通过ssh远程登陆。（如果你没有主机，可以参考上面的链接申请一个aws账号或Oracle账号，但是不要使用自动化脚本，只需手动创建一个云主机实例即可。）
 
 本地如果是Windows环境，推荐使用git-bash作为终端。
 
@@ -76,10 +82,6 @@
 
     如有其他不支持http或socks5代理的应用需要通过代理访问网络，可以使用 proxifier, proxycap, proxychains 等软件将应用的数据包截获并转发至代理服务。使用方法请自行搜索或查阅文档。
 
-优点：服务端容易（几乎无需）配置，只需ssh服务（通常默认开启）即可；转发的数据包通过ssh信道进行加密传输，而ssh为远程访问的通用软件，不易被查封，还可以更换端口；灵活控制，可以为每一个应用分别指定使用或不使用代理。
-
-缺点：如需全局全协议代理，客户端需要的工具较多，配置较为繁琐。
-
 附：手动配置L2TP服务
 
 已将L2TP服务配置脚本提取至[vpnsetup.sh](/vpnsetup.sh)，可参考以下步骤在任意服务器上配置L2TP服务：
@@ -91,6 +93,7 @@
     ```sh
     scp -i /path/to/your_private_key.pem vpnsetup.sh your_user_name@your_server_ip:~/
     ```
+    注：your_user_name 跟使用的操作系统镜像有关，如Ubuntu系统默认一般是ubuntu，不知道的话查询云服务提供商的文档。
 
 1. ssh登陆服务器。
 
